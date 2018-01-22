@@ -1,5 +1,5 @@
 import tweepy
-
+import newspaper
 # Consumer keys and access tokens, used for OAuth
 consumer_key = 'yWj68zD1NaPUoswXq8HGsaDOm'
 consumer_secret = 'e8fl2nAWuXS5rpYEhKdrms4kSoBRwedp8jyPkF2mMy9Xo5cQcu'
