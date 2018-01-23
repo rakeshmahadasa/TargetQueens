@@ -76,23 +76,30 @@ def main():
     									TweetCount=len(tweetList))
 
 
+def download_website_thread():
+
 #Lets do something creative
 #Extract Keywords
 #Build Summary
 def build_news_info(news_json):
 
-	news_urls=[]
-	for news_article in news_json:
-		news_urls.append(news_article["url"])
 	for news_count in range(0,len(news_json)):
-   		print(news_json[news_count]["url"])
    		current_news_article=Article(news_json[news_count]["url"])
-   		current_news_article.download()
-   		current_news_article.parse()
-   		news_json[news_count]["full_text"]=current_news_article.text
-   		current_news_article.nlp()
-   		news_json[news_count]["keywords"]=current_news_article.keywords
-   		news_json[news_count]["summary"]=current_news_article.summary
+   		count=1
+   		##Some time download take time. So lets give it some time
+   		##Im going to parallelize the download process after basic functionalities
+   		while count<=10:
+   			try:
+	   			current_news_article.download()
+	   			current_news_article.parse()
+	   			news_json[news_count]["full_text"]=current_news_article.text
+	   			current_news_article.nlp()
+	   			news_json[news_count]["keywords"]=current_news_article.keywords
+	   			news_json[news_count]["summary"]=current_news_article.summary
+	   			break
+   			except:
+   				count+=1
+   				pass	
 	return news_json
 
 def refresh_app():
@@ -104,8 +111,7 @@ def refresh_app():
    	raw_news=setup_news_api(setup,[setup["news_search_domains"]],[setup["news_search_keyword"]])
    	print("No of News Articles : " + str(len(raw_news["articles"])))	
    	news_json = raw_news["articles"]
-   	full_news_json = build_news_info([news_json[0]])
-   	print(full_news_json)
+   	full_news_json = build_news_info(news_json)
    	return app
 
 
