@@ -36,6 +36,7 @@ $(document).ready(function() {
 	});
 
 	$('.twitter-analysis-btn').click(function(){
+		$('.loader').show();
 
 
 		if ( $('.twitter-overlay').css('display') == 'none' )
@@ -140,7 +141,7 @@ $(document).ready(function() {
 						data: [ data['twitter_sentiment']['pos'],data['twitter_sentiment']['neg'],data['twitter_sentiment']['neu']]
 					}]
 				});
-
+				$('.loader').hide();
 			});
 
 	});
