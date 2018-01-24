@@ -6,6 +6,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="rough_css.css">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/wordcloud.js"></script>
 
 	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -104,7 +106,9 @@
 		<div class="twitter-overlay">
 			<div class="container-fluid">
 				<span class="twitter-overlay-close">&times;</span>
-				<p><strong>OVERLAY</strong></p>
+				<div id="tweet-word-cloud">
+					
+				</div>
 			</div>
 		</div>
 
@@ -212,7 +216,7 @@
 
 
 											</div>
-											<div class="col-sm-6 twitter-page-col">
+											<div class="col-sm-6 twitter-page-col" username="realDonaldTrump">
 												<a class="twitter-timeline" href="https://twitter.com/realDonaldTrump"></a> 
 											</div>
 										</div>

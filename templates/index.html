@@ -1,63 +1,229 @@
 <!DOCTYPE html>
-<html lang="en">
-
-
-
-
+<html>
 <head>
-  <title>TrackIt</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C-O-V-F-E-F-E</title>
+  <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 </head>
-
-
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <ul class="nav navbar-nav">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li>
-    </ul>
-    <form class="navbar-form navbar-left" action="/action_page.php">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search">
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </form>
+  <div class="card title-card bg-success">
+    <div class="card-block">
+      <strong id="title-text"><kbd> COVFEFE</kbd></strong>
+    </div>
   </div>
-</nav>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header newsfeed-brand">
+        <a class="navbar-brand" href="#"><strong class="text-danger">NewsFeed</strong></a>
+      </div>
 
+      <form class="navbar-form navbar-left" action="/action_page.php">
 
-    <div class="container-fluid full-page-container">
-        <div class="row full-page-row">
-            <div class="col-sm-6 cnn-page-col">
-
-                {% for news_count in range(ArticlesCount) %}
-                    <h1>{{NewsArticlesJSON["articles"][news_count]["title"]}}</h1>
-                    {{NewsArticlesJSON["articles"][news_count]["url"]}}<br>
-                    {{NewsArticlesJSON["articles"][news_count]["description"]}}<br>
-
-                {% endfor %}
-
-
+        <div class="form-group">
+          <div class="dropdown news-source-dropdown">
+            <button class="btn btn-muted dropdown-toggle" type="button" data-toggle="dropdown">News Source : 
+              <span class="news-source-selected-value">CNN</span><span class="caret"></span></button>
+              <ul class="dropdown-menu news-source-dropdown-menu">
+                <li><a href="#">CNN</a></li>
+                <li><a href="#">NYTimes</a></li>
+                <li><a href="#">WS Journal</a></li>
+              </ul>
             </div>
-            <div class="col-sm-6 twitter-page-col">
-                
-                {% for tweet_count in range(TweetCount) %}
-                    <h1>{{TweetList[tweet_count]}}</h1>
-                {% endfor %}
 
-            </div>
+            <input type="text" class="form-control" placeholder="Search for Keyword">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+    </nav>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header twitterfeed-brand">
+          <a class="navbar-brand" href="#"><strong class="text-info">TwitterFeed</strong></a>
+          <button type="button" class="btn btn-primary navbar-btn twitter-analysis-btn">Whassup</button>
+
         </div>
+        <form class="navbar-form navbar-left twitter-user-search-form">
+          <div class="form-group">
+            <input name="twitter-search-keyword" type="text" class="form-control" placeholder="Search Twitter Username">
+          </div>
+          <button type="submit" class="btn btn-default twitter-search-btn">Submit</button>
+        </form>
+      </div>
+    </nav>
+
+
+
+    <div class="news-overlay">
+      <div class="container-fluid">
+        <span class="news-overlay-close">&times;</span>
+        <div class="news-overlay-content">
+          <img class="news-overlay-image" src="http://cdn.cnn.com/cnnnext/dam/assets/180119174922-trump-white-house-0111-medium-tease.jpg" alt="News Image">
+          <div class="container news-overlay-container">
+            <h3 class="news-overlay-title text-danger">
+              Tapper: President Trump contradicts candidate Trump
+            </h3>
+            <p class="news-overlay-small-title"><kbd >Description</kbd>   </p>
+            <p class="news-ovelay-desc text-primary">
+              President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story
+            </p>
+            <p class="news-overlay-small-title"><kbd >Summary</kbd></p>
+            <p class="news-ovelay-summay">
+              President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story
+            </p>
+            <p class="news-overlay-small-title">  <kbd >Keywords</kbd></p>
+
+            <div class="news-ovelay-keywords">
+              <button class="btn btn-warning">John Dowd</button>  
+              <button class="btn btn-warning">John Dowd</button>  
+              <button class="btn btn-warning">John Dowd</button>  
+              <button class="btn btn-warning">John Dowd</button>  
+              <button class="btn btn-warning">John Dowd</button>  
+            </div>
+            <div class="full-article-redirect-btn">
+              <button class="btn btn-danger">Read Full Article</button> 
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-</body>
+
+    <div class="twitter-overlay">
+      <div class="container-fluid">
+        <span class="twitter-overlay-close">&times;</span>
+        <div id="tweet-word-cloud">
+        </div>
+        <div id="twitter-sentiment-bar">          
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid full-page-container">
+      <div class="row full-page-row">
+        <div class="col-sm-6 news-page-col">
+
+          <div class="news-card">
+            <div class="row news-card-row">
+              <div class="col-sm-4 no-padding">
+                <img class="news-image" src="http://cdn.cnn.com/cnnnext/dam/assets/180119174922-trump-white-house-0111-medium-tease.jpg" alt="News Image">
+              </div>
+              <div class="col-sm-8">
+                <strong class="text-danger news-headline">Tapper: President Trump contradicts candidate Trump</strong>
+                <p class="text-primary news-description">
+                President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story.</p>
+              </div>
+
+            </div>          </div>
+            <br>
+            <div class="news-card">
+              <div class="row news-card-row">
+                <div class="col-sm-4 no-padding">
+                  <img class="news-image" src="http://cdn.cnn.com/cnnnext/dam/assets/180119174922-trump-white-house-0111-medium-tease.jpg" alt="News Image">
+                </div>
+                <div class="col-sm-8">
+                  <strong class="text-danger news-headline">Tapper: President Trump contradicts candidate Trump</strong>
+                  <p class="text-primary news-description">
+                  President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story.</p>
+                </div>
+
+              </div>          </div>
+              <br>
+
+              <div class="news-card">
+                <div class="row news-card-row">
+                  <div class="col-sm-4 no-padding">
+                    <img class="news-image" src="http://cdn.cnn.com/cnnnext/dam/assets/180119174922-trump-white-house-0111-medium-tease.jpg" alt="News Image">
+                  </div>
+                  <div class="col-sm-8">
+                    <strong class="text-danger news-headline">Tapper: President Trump contradicts candidate Trump</strong>
+                    <p class="text-primary news-description">
+                    President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story.</p>
+                  </div>
+
+                </div>          </div>
+                <br>
+
+                <div class="news-card">
+                  <div class="row news-card-row">
+                    <div class="col-sm-4 no-padding">
+                      <img class="news-image" src="http://cdn.cnn.com/cnnnext/dam/assets/180119174922-trump-white-house-0111-medium-tease.jpg" alt="News Image">
+                    </div>
+                    <div class="col-sm-8">
+                      <strong class="text-danger news-headline">Tapper: President Trump contradicts candidate Trump</strong>
+                      <p class="text-primary news-description">
+                      President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story.</p>
+                    </div>
+
+                  </div>          </div>
+                  <br>
+
+                  <div class="news-card">
+                    <div class="row news-card-row">
+                      <div class="col-sm-4 no-padding">
+                        <img class="news-image" src="http://cdn.cnn.com/cnnnext/dam/assets/180119174922-trump-white-house-0111-medium-tease.jpg" alt="News Image">
+                      </div>
+                      <div class="col-sm-8">
+                        <strong class="text-danger news-headline">Tapper: President Trump contradicts candidate Trump</strong>
+                        <p class="text-primary news-description">
+                        President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story.</p>
+                      </div>
+
+                    </div>          </div>
+                    <br>
+
+                    <div class="news-card">
+                      <div class="row news-card-row">
+                        <div class="col-sm-4 no-padding">
+                          <img class="news-image" src="http://cdn.cnn.com/cnnnext/dam/assets/180119174922-trump-white-house-0111-medium-tease.jpg" alt="News Image">
+                        </div>
+                        <div class="col-sm-8">
+                          <strong class="text-danger news-headline">Tapper: President Trump contradicts candidate Trump</strong>
+                          <p class="text-primary news-description">
+                          President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story.</p>
+                        </div>
+
+                      </div>          </div>
+                      <br>
+
+                      <div class="news-card">
+                        <div class="row news-card-row">
+                          <div class="col-sm-4 no-padding">
+                            <img class="news-image" src="http://cdn.cnn.com/cnnnext/dam/assets/180119174922-trump-white-house-0111-medium-tease.jpg" alt="News Image">
+                          </div>
+                          <div class="col-sm-8">
+                            <strong class="text-danger news-headline">Tapper: President Trump contradicts candidate Trump</strong>
+                            <p class="text-primary news-description">
+                            President Donald Trump's personal attorney, John Dowd, said that the President cannot be guilty of obstructing justice, according to an interview with Axios. CNN's Jake Tapper looks at the latest developments in this story.</p>
+                          </div>
+
+                        </div>          </div>
 
 
 
-</html>
+
+                      </div>
+                      <div class="col-sm-6 twitter-page-col" username="realDonaldTrump">
+                        <a class="twitter-timeline" href="https://twitter.com/realDonaldTrump" ></a> 
+                      </div>
+                    </div>
+                  </div>
+
+
+                </body>
+                </html>

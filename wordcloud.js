@@ -1,0 +1,118 @@
+
+
+var myConfig = {
+"graphset":[
+{
+"type":"wordcloud",
+"options":{
+  "style":{
+    "tooltip":{
+      visible: true,
+      text: '%text: %hits'
+    }
+  },
+"words":[
+{
+"text":"time",
+"count":"342"
+},
+{
+"text":"shampoo",
+"count":"296"
+},
+{
+"text":"countylambtonoxfordelginlondon",
+"count":"25"
+},
+{
+"text":"football",
+"count":"25"
+},
+{
+"text":"omg",
+"count":"25"
+},
+{
+"text":"people",
+"count":"25"
+},
+{
+"text":"httpstcovohrotay",
+"count":"25"
+},
+{
+"text":"lol",
+"count":"25"
+},
+{
+"text":"questions",
+"count":"25"
+},
+{
+"text":"tomorrow",
+"count":"25"
+},
+{
+"text":"happy",
+"count":"25"
+},
+{
+"text":"democratically",
+"count":"25"
+},
+{
+"text":"vengeance",
+"count":"25"
+},
+{
+"text":"promise",
+"count":"24"
+},
+{
+"text":"god",
+"count":"24"
+},
+{
+"text":"terrible",
+"count":"24"
+},
+{
+"text":"realistic",
+"count":"24"
+},
+{
+"text":"hahahahahahaha",
+"count":"6"
+},
+{
+"text":"american",
+"count":"6"
+},
+{
+"text":"murphy's",
+"count":"6"
+},
+{
+"text":"surprised",
+"count":"6"
+},
+{
+"text":"jealous",
+"count":"6"
+},
+{
+"text":"radicals",
+"count":"4"
+}
+]
+}
+}
+]
+};
+ 
+zingchart.render({ 
+	id: 'myChart', 
+	data: myConfig, 
+	height: '100%', 
+	width: '100%' 
+});

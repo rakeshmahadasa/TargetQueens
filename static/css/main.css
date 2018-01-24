@@ -85,9 +85,9 @@
 /* The Close Button */
 .news-overlay-close,
 .twitter-overlay-close {
-	color: #aaaaaa;
+	color: red;
 	float: right;
-	font-size: 28px;
+	font-size: 55px;
 	font-weight: bold;
 }
 
@@ -95,13 +95,14 @@
 .news-overlay-close:focus,
 .twitter-overlay-close:hover,
 .twitter-overlay-close:focus {
-	color: #000;
+	color: white;
 	text-decoration: none;
 	cursor: pointer;
 }
 .news-overlay,
 .twitter-overlay{
 	display: none;
+   overflow-y: scroll;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -121,6 +122,7 @@
 	transition: 0.3s;
 }
 
+
 /* On mouse-over, add a deeper shadow */
 .news-overlay-content:hover {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -138,8 +140,7 @@
 	text-align: center;
 }
 
-.news-overlay-container,
-.twitter-overlay-container{
+.news-overlay-container{
 	width: 60%;
 	background-color: #ECFAC6;
 }
@@ -162,4 +163,15 @@ p,h3 {
 width: 60%;
 padding-top: 1%;
 margin: 0 auto;
+border: 2px solid #000;
+border-radius: 15px;
+-moz-border-radius: 15px;
+}
+#twitter-sentiment-bar {
+width: 60%;
+padding-top: 1%;
+margin: 0 auto;
+border: 2px solid #000;
+border-radius: 15px;
+-moz-border-radius: 15px;
 }
