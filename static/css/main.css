@@ -129,13 +129,14 @@
 }
 
 .news-overlay-image{
+	width: 50%;
+	height: 200px;
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
 	background-color: #ECFAC6;
 
 }
-
 .news-overlay-title{
 	text-align: center;
 }
@@ -177,7 +178,8 @@ border-radius: 15px;
 }
 
 
-.loader{
+.news_loader,
+.twitter_loader{
 	display: none;
 	position:absolute;
   top:0;

@@ -72,8 +72,10 @@ def setup_news_api(domain_list,keyword_list):
 	domain_list_str = domain_list_str[0:len(domain_list_str)-1]
 
 	for keyword in keyword_list:
-		keyword_list_str+=keyword
-		keyword_list_str+=","
+		splitwords=keyword.split()
+		for word in splitwords:
+			keyword_list_str+=word
+			keyword_list_str+=","
 	keyword_list_str = keyword_list_str[0:len(keyword_list_str)-1]
 		
 	api_url = \
@@ -156,45 +158,48 @@ def get_twitter_analysis():
 #Lets do something creative
 #Extract Keywords
 #Build Summary
-def build_news_info(news_json):
+@app.route("/get_news_info", methods=["GET", "POST"])
+def build_news_info():
+	url=request.args['url']
+	current_news_article=Article(url)
+	count=1
+	news_json={}
+	##Some time download take time. So lets give it some time
+   	##Im going to parallelize the download process after basic functionalities
+	while count<=10:
+		try:
+			current_news_article.download()
+			current_news_article.parse()
+			news_json["full_text"]=current_news_article.text
+			current_news_article.nlp()
+			news_json["keywords"]=current_news_article.keywords
+			news_json["summary"]=current_news_article.summary
+			news_json["sentiment"]=calc_sentiment(str(current_news_article.text))
+			break
+		except:
+			count+=1
+			pass
+	if count>10:
+			news_json["full_text"]=""
+			news_json["keywords"]=""
+			news_json["summary"]=""
+			news_json["sentiment"]="neu"	
+	req_fields=['full_text','summary','sentiment','keywords']
+	current_news_info={}
+	for field in req_fields:
+		current_news_info[field]=news_json[field]
 
-	for news_count in range(0,len(news_json)):
-   		current_news_article=Article(news_json[news_count]["url"])
-   		count=1
-   		##Some time download take time. So lets give it some time
-   		##Im going to parallelize the download process after basic functionalities
-   		while count<=10:
-   			try:
-	   			current_news_article.download()
-	   			current_news_article.parse()
-	   			news_json[news_count]["full_text"]=current_news_article.text
-	   			current_news_article.nlp()
-	   			news_json[news_count]["keywords"]=current_news_article.keywords
-	   			news_json[news_count]["summary"]=current_news_article.summary
-	   			news_json[news_count]["sentiment"]=calc_sentiment(str(current_news_article.text))
-	   			break
-   			except:
-   				count+=1
-   				pass
-   		if count>10:
-   				news_json[news_count]["full_text"]=news_json[news_count]["description"]
-	   			news_json[news_count]["keywords"]=news_json[news_count]["title"].split(" ")
-	   			news_json[news_count]["summary"]=news_json[news_count]["description"]
-	   			news_json[news_count]["sentiment"]="neu"			
-	return news_json
+	return jsonify(current_news_info)
 
-
-def refresh_app():
-   	#Set connection to news
-	raw_news=setup_news_api([setup["news_search_domains"]],[setup["news_search_keyword"]])
-	news_json = raw_news["articles"]
-	full_news_json = build_news_info(news_json)
-   	#return app
-
-
+@app.route("/news_analysis", methods=["GET", "POST"])
+def search_news():
+	keyword_list=[request.args['keyword']]
+	news_source=[request.args['news_source']]
+	raw_news=setup_news_api(news_source,keyword_list)
+	news_json=raw_news['articles']
+	return jsonify(news_json)	
     	
 if __name__ == "__main__":
-	refresh_app()
 	app.run()
 
 

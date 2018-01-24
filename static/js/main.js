@@ -1,4 +1,93 @@
 $(document).ready(function() {
+	var news_data;
+	$.get("/news_analysis", data={'keyword':'trump','news_source':'cnn.com'},
+		function(data,status){
+			news_data=data;
+			$(".news-page-col").empty();
+			console.log(data);
+			if(data.length == 0){
+				$('.news-page-col').html(
+						'<div class="alert alert-danger"><strong>Oops!</strong>No Search Results. Please check the search keyword or change the news source.</div>'
+
+					);
+			}
+			else{
+				$.each(data, function(count, news_info) {
+					var current_title=news_info['title'];
+					if(news_info['title'].length>65){
+						var current_title=news_info['title'].slice(0,62)+'...';
+					}
+					var news_card='<div class="news-card" id="'+String(count).trim()+				
+					'"><div class="row news-card-row">\
+					<div class="col-sm-4 no-padding">\
+					<img class="news-image" src="'+
+					news_info['urlToImage'].replace("'","\'")
+					+'" alt="News Image" newsurl="'+ news_info['url'].replace("'","\'")
+					+'">\
+					</div>\
+					<div class="col-sm-8">\
+					<strong class="text-danger news-headline">'+
+					current_title.replace("'","\'")
+					+
+					'</strong>\
+					<p class="text-primary news-description">\
+					'+news_info['description'].replace("'","\'")+'</p></div></div></div><br>'
+
+					$(".news-page-col").append(news_card)
+				});
+			}
+		});
+	
+	$('.news-search-form').submit(function() {
+    // Get all the forms elements and their values in one step
+
+    var values = $(this).serializeArray();
+    var news_search_keyword = values[0].value;
+    if(news_search_keyword == "") news_search_keyword='trump';
+    var news_source = $('.news-source-selected-value').text();
+   	$.get("/news_analysis", data={'keyword': news_search_keyword,'news_source':news_source},
+		function(data,status){
+			news_data=data;
+			$(".news-page-col").empty();
+			console.log(data);
+			if(data.length == 0){
+				$('.news-page-col').html(
+						'<div class="alert alert-danger"><strong>Oops!</strong>No Search Results. Please check the search keyword or change the news source.</div>'
+
+					);
+			}
+			else{
+				$.each(data, function(count, news_info) {
+					var current_title=news_info['title'];
+					if(news_info['title'].length>65){
+						var current_title=news_info['title'].slice(0,62)+'...';
+					}
+					var news_card='<div class="news-card" id="'+String(count).trim()+				
+					'"><div class="row news-card-row">\
+					<div class="col-sm-4 no-padding">\
+					<img class="news-image" src="'+
+					news_info['urlToImage'].replace("'","\'")
+					+'" alt="News Image" newsurl="'+ news_info['url'].replace("'","\'")
+					+'">\
+					</div>\
+					<div class="col-sm-8">\
+					<strong class="text-danger news-headline">'+
+					current_title.replace("'","\'")
+					+
+					'</strong>\
+					<p class="text-primary news-description">\
+					'+news_info['description'].replace("'","\'")+'</p></div></div></div><br>'
+
+					$(".news-page-col").append(news_card)
+				});
+			}
+		});
+	
+
+
+
+    return false;
+});
 
 	$(".news-source-dropdown-menu li a").click(function(){
 		$(this).parents(".news-source-dropdown").find('.news-source-selected-value').text($(this).text());
@@ -22,21 +111,39 @@ $(document).ready(function() {
 
     return false;
 });
+	$('.news-page-col').on('click', '.news-card', function(){
+		$('.news-overlay').show();
+		$('.news_loader').show();
+		var curr_news_id=Number($(this).attr("id"));
+		console.log(curr_news_id);
+		console.log(news_data[curr_news_id]['url']);
+		$.get("/get_news_info", data={'url':news_data[curr_news_id]['url']},
+			function(data,status){
+				var curr_news_card=news_data[curr_news_id];
+				$(".news-overlay-image").attr("src",news_data[curr_news_id]['urlToImage']);
+				$(".news-overlay-title").text(news_data[curr_news_id]["title"]);
+				$(".news-overlay-desc").text(news_data[curr_news_id]['description']);
+				$(".news-overlay-summay").text(data["summary"]);
 
-	$('.news-card').click(function(){
-		if ( $('.news-overlay').css('display') == 'none' )
-			$('.news-overlay').css('display','block');
-		else
-			$('.news-overlay').css('display','none');
+
+				
+				var keyword_button_list="";
+				$.each(data['keywords'], function(count, keyword) {
+					var keyword_button='<button class="btn btn-warning">'+ data['keywords'][count] +'</button>&nbsp;';
+					keyword_button_list=keyword_button_list+keyword_button;
+				});
+				$(".news-overlay-keywords").html(keyword_button_list);
+				$(".redirect-link").attr("href",news_data[curr_news_id]['url']);
+
+			}).always(function(data){$('.news_loader').hide();});
 	});
 
 	$('.news-overlay-close').click(function(){
-		console.log("OVERLAY CLOSE")
-		$('.news-overlay').css('display','none');
+		$('.news-overlay').hide();
 	});
 
 	$('.twitter-analysis-btn').click(function(){
-		$('.loader').show();
+		$('.twitter_loader').show();
 
 
 		if ( $('.twitter-overlay').css('display') == 'none' )
@@ -46,6 +153,7 @@ $(document).ready(function() {
 
 		var current_username = $('.twitter-page-col').attr('username');
 		console.log("Getting analysis for tweets for user : " + current_username);
+
 		$.get('/twitter_analysis',data={'username':current_username},
 			function(data,status){
 				console.log(data)
@@ -141,13 +249,12 @@ $(document).ready(function() {
 						data: [ data['twitter_sentiment']['pos'],data['twitter_sentiment']['neg'],data['twitter_sentiment']['neu']]
 					}]
 				});
-				$('.loader').hide();
+				$('.twitter_loader').hide();
 			});
 
 	});
 
 	$('.twitter-overlay-close').click(function(){
-		console.log("OVERLAY CLOSE")
 		$('.twitter-overlay').css('display','none');
 	});
 
