@@ -1,28 +1,33 @@
 $(document).ready(function() {
 	var news_data;
-	$.get("/news_analysis", data={'keyword':'trump','news_source':'cnn.com'},
+	$.get("/news_analysis", data={'keyword': 'trump','news_source':'cnn.com'},
 		function(data,status){
 			news_data=data;
 			$(".news-page-col").empty();
 			console.log(data);
 			if(data.length == 0){
 				$('.news-page-col').html(
-						'<div class="alert alert-danger"><strong>Oops!</strong>No Search Results. Please check the search keyword or change the news source.</div>'
+					'<div class="alert alert-danger"><strong>Oops!</strong>No Search Results. Please check the search keyword or change the news source.</div>'
 
 					);
 			}
 			else{
 				$.each(data, function(count, news_info) {
-					var current_title=news_info['title'];
+					var current_title="Title for the Article Not Found";
+					if(news_info['title']!=null)current_title=news_info['title'];
+					var news_image_url="";
+					if(news_info['urlToImage']!=null)news_image_url=news_info['urlToImage'].replace("'","\'");
 					if(news_info['title'].length>65){
 						var current_title=news_info['title'].slice(0,62)+'...';
 					}
+					var news_url="#";
+					if(news_info['url']!=null)news_url=news_info['url'].replace("'","\'");
 					var news_card='<div class="news-card" id="'+String(count).trim()+				
 					'"><div class="row news-card-row">\
 					<div class="col-sm-4 no-padding">\
 					<img class="news-image" src="'+
-					news_info['urlToImage'].replace("'","\'")
-					+'" alt="News Image" newsurl="'+ news_info['url'].replace("'","\'")
+					news_image_url
+					+'"alt="Image not found" onerror="this.onerror=null;this.src=\'static/news.jpg\';"newsurl="'+ news_url
 					+'">\
 					</div>\
 					<div class="col-sm-8">\
@@ -45,44 +50,49 @@ $(document).ready(function() {
     var news_search_keyword = values[0].value;
     if(news_search_keyword == "") news_search_keyword='trump';
     var news_source = $('.news-source-selected-value').text();
-   	$.get("/news_analysis", data={'keyword': news_search_keyword,'news_source':news_source},
-		function(data,status){
-			news_data=data;
-			$(".news-page-col").empty();
-			console.log(data);
-			if(data.length == 0){
-				$('.news-page-col').html(
-						'<div class="alert alert-danger"><strong>Oops!</strong>No Search Results. Please check the search keyword or change the news source.</div>'
+    $.get("/news_analysis", data={'keyword': news_search_keyword,'news_source':news_source},
+    	function(data,status){
+    		news_data=data;
+    		$(".news-page-col").empty();
+    		console.log(data);
+    		if(data.length == 0){
+    			$('.news-page-col').html(
+    				'<div class="alert alert-danger"><strong>Oops!</strong>No Search Results. Please check the search keyword or change the news source.</div>'
 
-					);
-			}
-			else{
-				$.each(data, function(count, news_info) {
-					var current_title=news_info['title'];
-					if(news_info['title'].length>65){
-						var current_title=news_info['title'].slice(0,62)+'...';
-					}
-					var news_card='<div class="news-card" id="'+String(count).trim()+				
-					'"><div class="row news-card-row">\
-					<div class="col-sm-4 no-padding">\
-					<img class="news-image" src="'+
-					news_info['urlToImage'].replace("'","\'")
-					+'" alt="News Image" newsurl="'+ news_info['url'].replace("'","\'")
-					+'">\
-					</div>\
-					<div class="col-sm-8">\
-					<strong class="text-danger news-headline">'+
-					current_title.replace("'","\'")
-					+
-					'</strong>\
-					<p class="text-primary news-description">\
-					'+news_info['description'].replace("'","\'")+'</p></div></div></div><br>'
+    				);
+    		}
+    		else{
+    			$.each(data, function(count, news_info) {
+    				var current_title="Title for the Article Not Found";
+    				if(news_info['title']!=null)current_title=news_info['title'];
+    				var news_image_url="";
+    				if(news_info['urlToImage']!=null)news_image_url=news_info['urlToImage'].replace("'","\'");
+    				if(news_info['title'].length>65){
+    					var current_title=news_info['title'].slice(0,62)+'...';
+    				}
+    				var news_url="#";
+    				if(news_info['url']!=null)news_url=news_info['url'].replace("'","\'");
+    				var news_card='<div class="news-card" id="'+String(count).trim()+				
+    				'"><div class="row news-card-row">\
+    				<div class="col-sm-4 no-padding">\
+    				<img class="news-image" src="'+
+    				news_image_url
+    				+'"alt="Image not found" onerror="this.onerror=null;this.src=\'static/news.jpg\';"newsurl="'+ news_url
+    				+'">\
+    				</div>\
+    				<div class="col-sm-8">\
+    				<strong class="text-danger news-headline">'+
+    				current_title.replace("'","\'")
+    				+
+    				'</strong>\
+    				<p class="text-primary news-description">\
+    				'+news_info['description'].replace("'","\'")+'</p></div></div></div><br>'
 
-					$(".news-page-col").append(news_card)
-				});
-			}
-		});
-	
+    				$(".news-page-col").append(news_card)
+    			});
+    		}
+    	});
+
 
 
 
@@ -105,9 +115,24 @@ $(document).ready(function() {
     var values = $(this).serializeArray();
     var search_keyword=(values[0].value).trim()
     console.log(search_keyword)
-    $('.twitter-page-col').html(" <a class=\"twitter-timeline\" href=\"https://twitter.com/"+ search_keyword +"\"></a>"); 
-    $('.twitter-page-col').attr("username",search_keyword);
-    twttr.widgets.load();
+
+    $.get("/is_valid_user", data={'username':search_keyword},
+    	function(data,status){
+    		if(data['valid']=='1'){
+				$('.twitter-page-col').html(" <a class=\"twitter-timeline\" href=\"https://twitter.com/"+ search_keyword +"\"></a>"); 
+    			$('.twitter-page-col').attr("username",search_keyword);
+    			twttr.widgets.load();
+    			$('.twitter-analysis-btn').prop('disabled',false);
+    		}
+    		else{
+    			$('.twitter-analysis-btn').prop('disabled',true);
+    			$('.twitter-page-col').html(
+					'<div class="alert alert-danger"><strong>Oops!</strong>No Users Found with the Username you provided. Please check the username you searched for.</div>'
+
+					);
+    		}
+
+    	});
 
     return false;
 });
@@ -127,11 +152,12 @@ $(document).ready(function() {
 
 
 				
-				var keyword_button_list="";
+				var keyword_button_list='<p class="news-keyword text-danger">';
 				$.each(data['keywords'], function(count, keyword) {
-					var keyword_button='<button class="btn btn-warning">'+ data['keywords'][count] +'</button>&nbsp;';
+					var keyword_button='<strong>|&nbsp;'+ data['keywords'][count] +'&nbsp;|<strong>';
 					keyword_button_list=keyword_button_list+keyword_button;
 				});
+				keyword_button_list=keyword_button_list+'</p>'
 				$(".news-overlay-keywords").html(keyword_button_list);
 				$(".redirect-link").attr("href",news_data[curr_news_id]['url']);
 

@@ -8,7 +8,6 @@ import os
 import time
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk import tokenize
-from rake_nltk import Rake
 from flask.json import jsonify
 import re
 from nltk.corpus import stopwords
@@ -143,7 +142,6 @@ def get_twitter_analysis():
 		tweet_sentiment = calc_sentiment(tweet)
 		senti_count[tweet_sentiment]+=1
 	twitter_sentiment=max(senti_count, key=senti_count.get)
-	rake_kw = Rake()
 	twitter_data=""
 	for tweet in tweetList:
 		twitter_data+=tweet
@@ -198,9 +196,20 @@ def search_news():
 	raw_news=setup_news_api(news_source,keyword_list)
 	news_json=raw_news['articles']
 	return jsonify(news_json)	
-    	
+
+@app.route("/is_valid_user", methods=["GET", "POST"])
+def is_twitter_user_valid():
+	username=request.args['username']
+	validity={'valid':'1'}
+	try:
+		twitter_api.get_user(screen_name=username)
+	except:
+		validity['valid']='0'
+	return jsonify(validity)	
+
+
 if __name__ == "__main__":
 	app.run()
-
+	
 
 
