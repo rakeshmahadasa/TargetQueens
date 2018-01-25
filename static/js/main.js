@@ -119,7 +119,7 @@ $(document).ready(function() {
     $.get("/is_valid_user", data={'username':search_keyword},
     	function(data,status){
     		if(data['valid']=='1'){
-				$('.twitter-page-col').html(" <a class=\"twitter-timeline\" href=\"https://twitter.com/"+ search_keyword +"\"></a>"); 
+    			$('.twitter-page-col').html(" <a class=\"twitter-timeline\" href=\"https://twitter.com/"+ search_keyword +"\"></a>"); 
     			$('.twitter-page-col').attr("username",search_keyword);
     			twttr.widgets.load();
     			$('.twitter-analysis-btn').prop('disabled',false);
@@ -127,9 +127,9 @@ $(document).ready(function() {
     		else{
     			$('.twitter-analysis-btn').prop('disabled',true);
     			$('.twitter-page-col').html(
-					'<div class="alert alert-danger"><strong>Oops!</strong>No Users Found with the Username you provided. Please check the username you searched for.</div>'
+    				'<div class="alert alert-danger"><strong>Oops!</strong>No Users Found with the Username you provided. Please check the username you searched for.</div>'
 
-					);
+    				);
     		}
 
     	});
@@ -149,10 +149,13 @@ $(document).ready(function() {
 				$(".news-overlay-title").text(news_data[curr_news_id]["title"]);
 				$(".news-overlay-desc").text(news_data[curr_news_id]['description']);
 				$(".news-overlay-summay").text(data["summary"]);
-
-
-				
-				var keyword_button_list='<p class="news-keyword text-danger">';
+				if(data['sentiment']=='pos')
+					$(".news-overlay-sentiment").html('<div class="text-success">Sentiment in the Article is <strong>Positive</strong></div>');
+				if(data['sentiment']=='neg')
+					$(".news-overlay-sentiment").html('<div class="text-danger">Sentiment in the Article is <strong>Negative</strong></div>');
+				if(data['sentiment']=='neu')
+					$(".news-overlay-sentiment").html('<div class="text-warning">Sentiment in the Article is <strong>Neutral</strong></div>');
+				var keyword_button_list='<p class="news-keyword text-primary">';
 				$.each(data['keywords'], function(count, keyword) {
 					var keyword_button='<strong>|&nbsp;'+ data['keywords'][count] +'&nbsp;|<strong>';
 					keyword_button_list=keyword_button_list+keyword_button;
@@ -160,6 +163,53 @@ $(document).ready(function() {
 				keyword_button_list=keyword_button_list+'</p>'
 				$(".news-overlay-keywords").html(keyword_button_list);
 				$(".redirect-link").attr("href",news_data[curr_news_id]['url']);
+
+
+
+
+				var news_full_data = data['full_text'];
+				if(news_full_data.length > 0){
+				var lines = news_full_data.split(/[,\. ]+/g),
+				highcharts_data = Highcharts.reduce(lines, function (arr, word) {
+					var obj = Highcharts.find(arr, function (obj) {
+						return obj.name === word;
+					});
+					if (obj) {
+						obj.weight += 1;
+					} else {
+						obj = {
+							name: word,
+							weight: 1
+						};
+						arr.push(obj);
+					}
+					return arr;
+				}, []);
+
+				highcharts_data.sort(function(first, second) {
+					return second.weight - first.weight;
+				});
+				highcharts_data = highcharts_data.slice(0,66);
+				Highcharts.chart('news-overlay-wordcloud', {
+					series: [{
+						type: 'wordcloud',
+						data: highcharts_data,
+						name: 'Occurrences',
+					}],
+					title: {
+						text: 'Wordcloud of News Article'
+					}
+				});
+			}
+
+
+
+
+
+
+
+
+
 
 			}).always(function(data){$('.news_loader').hide();});
 	});

@@ -168,7 +168,9 @@ def build_news_info():
 		try:
 			current_news_article.download()
 			current_news_article.parse()
-			news_json["full_text"]=current_news_article.text
+			clean_news_data = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", current_news_article.text).split())
+			no_stop_twitter_data = [i for i in word_tokenize(clean_news_data.lower()) if i not in stop_words]
+			news_json["full_text"]=' '.join(no_stop_twitter_data)
 			current_news_article.nlp()
 			news_json["keywords"]=current_news_article.keywords
 			news_json["summary"]=current_news_article.summary

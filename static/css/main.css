@@ -152,7 +152,8 @@
 	background-color: #ECFAC6;
 
 }
-.news-overlay-title{
+.news-overlay-title,
+.news-overlay-sentiment{
 	text-align: center;
 }
 
