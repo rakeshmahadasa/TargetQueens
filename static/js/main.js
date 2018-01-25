@@ -45,7 +45,7 @@ $(document).ready(function() {
 	
 	$('.news-search-form').submit(function() {
     // Get all the forms elements and their values in one step
-
+    $('.news-col-loader').show();
     var values = $(this).serializeArray();
     var news_search_keyword = values[0].value;
     if(news_search_keyword == "") news_search_keyword='trump';
@@ -91,7 +91,7 @@ $(document).ready(function() {
     				$(".news-page-col").append(news_card)
     			});
     		}
-    	});
+    	}).always(function(data){$('.news-col-loader').hide();});
 
 
 

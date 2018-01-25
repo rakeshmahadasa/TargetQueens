@@ -195,7 +195,9 @@ border-radius: 15px;
 
 
 .news_loader,
-.twitter_loader{
+.twitter_loader,
+.news-col-loader,
+.twitter-col-loader{
 	display: none;
 	position:absolute;
   top:0;
