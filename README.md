@@ -36,7 +36,7 @@ API at a Glance:
         request type : GET
         return Value : JSON ( Tweet Sentiment Analysis, Cleaned Twitter Text for Keyword Extraction )
 	**Explanation** : The website contains an option to view what's up with the twitter feed of the user you searched for. Once you search for the user and click on the button **Whats Up** , a UI with keywords and sentiment analysis of his latest 25 tweets will be displayed. This will help us to know what the user is talking about frequently and also analyze the sentiment/polarity in his tweets.
-	
+
     **Implementation**: I used Tweepy library from python to hit the twitter v1.1 api and get the latest tweets of the specified username. Once I read the tweets, I do the sentiment analysis of each tweet after preprocessing which includes word tokenization, using python nltk library. To get the keywords from the tweet, I count the frequency of the words after I clean the urls,symbols,stop words from the tweets. 
 
 - ``API End Point : /get_news_info``
@@ -72,6 +72,8 @@ API at a Glance:
 **Required Packages** : pip3 ( sudo apt-get install pip3 ) , python3 ( sudo apt-get install python3)
 
 **Clone the repository** : git clone https://github.com/rakeshmahadasa/TargetQueens
+
+**change the working directory**: cd TargetQueens
 
 **Install the dependencies** : pip3 install -r requirements.txt
 
