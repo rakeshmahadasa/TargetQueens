@@ -222,3 +222,21 @@ border-radius: 15px;
 .news-overlay-keywords{
 	 word-wrap: break-word;
 }
+
+.jumbotron{
+	line-height: 22px;
+	padding-top: 10px;
+	padding-bottom:10px;
+}
+
+.jumbotron .shortdesc{
+	font-size: 15px;
+}
+.jumbotron .shortdesc{
+	font-size: 15px;
+}
+
+.reqdev{
+	margin: auto;
+}
+

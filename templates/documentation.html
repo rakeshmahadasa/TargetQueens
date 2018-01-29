@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>COVFEFE DOCUMENTATION</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	<link rel="stylesheet" href="../static/css/main.css">
+
+
+</head>
+<body>
+	<div class="container documentation-body">
+		<div class="jumbotron">
+			<h2 class="text-center">COVFEFE</h2> 
+			<p class="text-center shortdesc">		
+				<strong>COVFEFE</strong> is a web application to track the trending news about any topic and twitter feed of influential persons. This application also helps the users to find out the keywords and sentiment in the news articles as well as the tweets of the person, the user searched for.
+				<blockquote class="text-center">This is part of the assigment by Dr. Hassan and Dr. Cor-Paul</blockquote>
+				<blockquote class="techstackbq text-center"><strong>Tech Stack : </strong> Python Libraries, Flask, HTML, Javascript, Jquery, Twitter API</blockquote>
+			</p>
+		</div>
+		<div class="container reqdev">
+			<div class="requirements">
+				<p><kbd>Requirements</kbd></p>
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-info">A crawler that crawls the latest 25 articles about Trump from CNN.com and his latest 25 tweets</li>
+					<li class="list-group-item list-group-item-info">A simple website that displays the titles of the crawled information</li>
+					<li class="list-group-item list-group-item-info">A convenient way of displaying the information after I click on one of the titles
+					</li>
+					<li class="list-group-item list-group-item-info">A cool feature that I came up with yourself.
+					</li>
+				</ul>
+			</div>
+			<div class="deliverables">
+				<p><kbd>Deliverables</kbd></p>
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-success">A API to search about <strong>any</strong> trending topic not just Trump</li>
+					<li class="list-group-item list-group-item-success">An option to configure the news from <strong>CNN, NYTimes, WS Journal</strong></li>
+					<li class="list-group-item list-group-item-success">A convenient UI to display the news articles as well as latest 25 tweets.</li>
+					<li class="list-group-item list-group-item-success">A convenient UI to display the <strong>Title, Description, Summary, Keywords and Sentiment in the News Article</strong>, once the title is clicked</li>
+					<li class="list-group-item list-group-item-success">An Option to show the <strong>keywords</strong> from the twitter feed as well as the sentiment of the latest 25 tweets of the user.
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="documentation">
+			<kbd>API End Points Created</kbd>
+			<div>
+				<kbd>@app.route("/")</kbd>
+				<p>
+					This Homepage renders two views where you can track
+				</p>
+			</div>
+			<div>
+				<kbd>@app.route("/twitter_analysis", methods=["GET", "POST"])</kbd>
+			</div>
+			<div>
+				<kbd>@app.route("/get_news_info", methods=["GET", "POST"])</kbd>
+			</div>
+			<div>
+				<kbd>@app.route("/news_analysis", methods=["GET", "POST"])</kbd>
+			</div>
+			<div>
+				<kbd>@app.route("/is_valid_user", methods=["GET", "POST"])</kbd>
+			</div>			
+		</div>
+
+	</div>
+	
+
+</body>
+</html>
