@@ -4,3 +4,4 @@ nltk==3.2.5
 textblob==0.15.1
 newspaper3k==0.2.5
 beautifulsoup4==4.6.0
+gunicorn==19.7.1
