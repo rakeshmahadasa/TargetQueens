@@ -69,22 +69,40 @@ API at a Glance:
 
 **Installation Steps:**
 
-**Required Packages** : pip3 ( sudo apt-get install pip3 ) , python3 ( sudo apt-get install python3)
+- Required Packages : pip3 ( sudo apt-get install pip3 ) , python3 ( sudo apt-get install python3)
 
-**Clone the repository** : git clone https://github.com/rakeshmahadasa/TargetQueens
+- Clone the repository : 
+	
+    ``git clone https://github.com/rakeshmahadasa/TargetQueens``
 
-**change the working directory**: cd TargetQueens
+- change the working directory: 
 
-**Install the dependencies** : pip3 install -r requirements.txt
+    ``cd TargetQueens``
 
-**Start the server** : python3 Crawler_CNN.py
+- Install the dependencies : 
+	
+    ``pip3 install -r requirements.txt``
+
+- Start the server : 
+	
+    ``python3 Crawler_CNN.py``
 
 This will start the flask server and you can visit the website at http://127.0.0.1:5000/ 
 
 
+**Visit the Website Without Installation [HERE](https://covfefe-queens.herokuapp.com/)**
 
 
 
+**Challenges Faced**
+- Though CNN's homepage can be crawled for information, we might not get enough news articles which contains search key word to display them on our website. So We can use the search option to search for top 25 news containing the search keyword. But the search wep page cannot be crawled with urllib to fetch the news feed data that contains search keyword as the search results are loaded using javascript. This forced us to use CNN developer API to directly search for news containing our search keyword. Since, CNN developer access is taking time, I used NewsAPI to search the news across different news sources.This allowed us to customize the news source.
+- Though I used twitter v1.1 API to read the tweets for a particular user, These results are only used for sentiment analysis and keyword extraction. I used twitter widget to show the twitter feed which will add better user experience to the website.
+
+
+**Further Improvements**
+- Keyword extraction and data preprocessing of tweets and news articles can be improved. Given that we are going to have only news articles and tweets as sources of text, we can leverage this to improve our keyword extraction and sentiment analysis.
+- Use python's selenium library so that I can snoop and crawl the website even with javascript elements populating the webpage we wish to download. This will remove our dependency on external API ( NewsApi )
+- UI has lot of scope for improvement. I'm planning modify the website to make it compatible for mobile devices as well.
 
 
 
