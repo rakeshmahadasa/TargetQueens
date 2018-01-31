@@ -26,110 +26,113 @@
       <strong id="title-text"><kbd> COVFEFE</kbd></strong>
     </div>
   </div>
-  <nav class="navbar navbar-inverse">
+
+
+  <div class="news-overlay">
     <div class="container-fluid">
-      <div class="navbar-header newsfeed-brand">
-        <a class="navbar-brand" href="#"><strong class="text-danger">NewsFeed</strong></a>
-      </div>
+      <div class="news_loader"></div>
+      <span class="news-overlay-close">&times;</span>
+      <div class="news-overlay-content">
+        <img class="news-overlay-image"  src="" alt="News Image">
+        <div class="container news-overlay-container">
+          <h3 class="news-overlay-title text-danger">
+          </h3>
+          <p class="news-overlay-small-title"><kbd >Description</kbd>   </p>
+          <p class="news-overlay-desc text-primary">
+          </p>
+          <p class="news-overlay-small-title"><kbd >Summary</kbd></p>
+          <p class="news-overlay-summay">
+          </p>
+          <p class="news-overlay-small-title">  <kbd >Keywords</kbd></p>
 
-      <form class="news-search-form navbar-form navbar-left">
-
-        <div class="form-group">
-          <div class="dropdown news-source-dropdown">
-            <button class="btn btn-muted dropdown-toggle" type="button" data-toggle="dropdown">News Source : 
-              <span class="news-source-selected-value">cnn.com</span><span class="caret"></span></button>
-              <ul class="dropdown-menu news-source-dropdown-menu">
-                <li><a href="#">cnn.com</a></li>
-                <li><a href="#">nytimes.com</a></li>
-                <li><a href="#">wsj.com</a></li>
-              </ul>
-            </div>
-
-            <input name="news-search-keyword" type="text" class="form-control" placeholder="Search for Keyword">
+          <div class="news-overlay-keywords">
           </div>
-          <button type="submit" class="news-search-btn btn btn-default">Submit</button>
-        <i class="fa fa-circle-o-notch fa-spin news-spinner" style="color: white;font-size: 25px;"></i>
-
-        </form>
-      </div>
-
-    </nav>
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header twitterfeed-brand">
-          <a class="navbar-brand" href="#"><strong class="text-info">TwitterFeed</strong></a>
-          <button type="button" class="btn btn-primary navbar-btn twitter-analysis-btn">What's Up</button>
-
-        </div>
-        <form class="navbar-form navbar-left twitter-user-search-form">
-          <div class="form-group">
-            <input name="twitter-search-keyword" type="text" class="form-control" placeholder="Search Twitter Username">
+          <br>
+          <p class="news-overlay-small-title">  <kbd >Sentiment of News Article</kbd></p>
+          <p class="news-overlay-sentiment"></p>
+          <div id="news-overlay-wordcloud"></div>
+          <br>
+          <div class="full-article-redirect-btn">
+            <a class="redirect-link" target="_blank" href="">
+              <button class="btn btn-danger">Read Full Article</button> 
+            </a>
           </div>
-          <button type="submit" class="btn btn-default twitter-search-btn">Submit</button>
-        </form>
-      </div>
-    </nav>
-
-
-    <div class="news-overlay">
-      <div class="container-fluid">
-        <div class="news_loader"></div>
-        <span class="news-overlay-close">&times;</span>
-        <div class="news-overlay-content">
-          <img class="news-overlay-image"  src="" alt="News Image">
-          <div class="container news-overlay-container">
-            <h3 class="news-overlay-title text-danger">
-            </h3>
-            <p class="news-overlay-small-title"><kbd >Description</kbd>   </p>
-            <p class="news-overlay-desc text-primary">
-            </p>
-            <p class="news-overlay-small-title"><kbd >Summary</kbd></p>
-            <p class="news-overlay-summay">
-            </p>
-            <p class="news-overlay-small-title">  <kbd >Keywords</kbd></p>
-
-            <div class="news-overlay-keywords">
-            </div>
-            <br>
-            <p class="news-overlay-small-title">  <kbd >Sentiment of News Article</kbd></p>
-            <p class="news-overlay-sentiment"></p>
-            <div id="news-overlay-wordcloud"></div>
-            <br>
-            <div class="full-article-redirect-btn">
-              <a class="redirect-link" target="_blank" href="">
-                <button class="btn btn-danger">Read Full Article</button> 
-              </a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-
-    <div class="twitter-overlay">
-      <div class="container-fluid">
-        <div class="twitter_loader"></div>
-        <span class="twitter-overlay-close">&times;</span>
-        <div id="tweet-word-cloud">
-        </div>
-        <div id="twitter-sentiment-bar">          
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid full-page-container">
-      <div class="row full-page-row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 news-page-col">
-
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 twitter-page-col" username="realDonaldTrump">
-          <a class="twitter-timeline" href="https://twitter.com/realDonaldTrump" ></a> 
         </div>
       </div>
 
     </div>
+  </div>
 
 
-  </body>
-  </html>
+  <div class="twitter-overlay">
+    <div class="container-fluid">
+      <div class="twitter_loader"></div>
+      <span class="twitter-overlay-close">&times;</span>
+      <div id="tweet-word-cloud">
+      </div>
+      <div id="twitter-sentiment-bar">          
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid full-page-container">
+    <div class="row full-page-row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header newsfeed-brand">
+              <a class="navbar-brand" href="#"><strong class="text-danger">NewsFeed</strong></a>
+            </div>
+
+            <form class="news-search-form navbar-form navbar-left">
+
+              <div class="form-group">
+                <div class="dropdown news-source-dropdown">
+                  <button class="btn btn-muted dropdown-toggle" type="button" data-toggle="dropdown">News Source : 
+                    <span class="news-source-selected-value">cnn.com</span><span class="caret"></span></button>
+                    <ul class="dropdown-menu news-source-dropdown-menu">
+                      <li><a href="#">cnn.com</a></li>
+                      <li><a href="#">nytimes.com</a></li>
+                      <li><a href="#">wsj.com</a></li>
+                    </ul>
+                  </div>
+
+                  <input name="news-search-keyword" type="text" class="form-control" placeholder="Search for Keyword">
+                </div>
+                <button type="submit" class="news-search-btn btn btn-default">Submit</button>
+                <i class="fa fa-circle-o-notch fa-spin news-spinner" style="color: white;font-size: 25px;"></i>
+
+              </form>
+            </div>
+
+          </nav>
+          <div class="container-fluid news-page-col">
+            
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+          <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header twitterfeed-brand">
+                <a class="navbar-brand" href="#"><strong class="text-info">TwitterFeed</strong></a>
+                <button type="button" class="btn btn-primary navbar-btn twitter-analysis-btn">What's Up</button>
+
+              </div>
+              <form class="navbar-form navbar-left twitter-user-search-form">
+                <div class="form-group">
+                  <input name="twitter-search-keyword" type="text" class="form-control" placeholder="Search Twitter Username">
+                </div>
+                <button type="submit" class="btn btn-default twitter-search-btn">Submit</button>
+              </form>
+            </div>
+          </nav>
+          <div class="container-fluid twitter-page-col" username="realDonaldTrump">
+            <a class="twitter-timeline" href="https://twitter.com/realDonaldTrump" ></a> 
+          </div>
+        </div>
+
+      </div>
+
+
+    </body>
+    </html>

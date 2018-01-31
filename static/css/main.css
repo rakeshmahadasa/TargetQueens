@@ -19,10 +19,7 @@
 	filter: brightness(85%);
 }
 
-.navbar {
-	width: 50%;
-	float: left;
-}
+
 
 .news-card {
 	/* Add shadows to create the "card" effect */
@@ -49,9 +46,6 @@
 	display: inline;
 }
 
-.retweet-option-dropdown{
-	display: inline;
-}
 
 .news-headline{
 	font-size: 20px;
