@@ -1,9 +1,73 @@
 $(document).ready(function() {
+
+
+
+
+
 	var news_data;
+	var news_search_keyword="trump";
+	var news_source="cnn.com";
+
+
+	function loadnews(){
+		$(
+			function(){
+				$.get("/news_analysis", data={'keyword': news_search_keyword,'news_source':news_source},
+					function(data,status){
+						$(".news-spinner").css('display','inline-block');
+						news_data=data;
+						$(".news-page-col").empty();
+						if(data.length == 0){
+							$('.news-page-col').html(
+								'<div class="alert alert-danger"><strong>Oops!</strong>No Search Results. Please check the search keyword or change the news source.</div>'
+
+								);
+						}
+						else{
+							$.each(data, function(count, news_info) {
+								var current_title="Title for the Article Not Found";
+								if(news_info['title']!=null)current_title=news_info['title'];
+								var news_image_url="";
+								if(news_info['urlToImage']!=null)news_image_url=news_info['urlToImage'].replace("'","\'");
+								if(news_info['title'].length>65){
+									var current_title=news_info['title'].slice(0,62)+'...';
+								}
+								var news_url="#";
+								if(news_info['url']!=null)news_url=news_info['url'].replace("'","\'");
+								var news_card='<div class="news-card" id="'+String(count).trim()+				
+								'"><div class="row news-card-row">\
+								<div class="col-sm-4 no-padding">\
+								<img class="news-image" src="'+
+								news_image_url
+								+'"alt="Image not found" onerror="this.onerror=null;this.src=\'static/news.jpg\';"newsurl="'+ news_url
+								+'">\
+								</div>\
+								<div class="col-sm-8">\
+								<strong class="text-danger news-headline">'+
+								current_title.replace("'","\'")
+								+
+								'</strong>\
+								<p class="text-primary news-description">\
+								'+news_info['description'].replace("'","\'")+'</p></div></div></div><br>'
+
+								$(".news-page-col").append(news_card)
+							});
+						}
+					}).always(function(data){$(".news-spinner").hide();});
+
+			}
+			);
+	}
+
+	setInterval(loadnews, 100000);
+
+
 	$.get("/news_analysis", data={'keyword': 'trump','news_source':'cnn.com'},
 		function(data,status){
 			news_data=data;
+			$(".news-spinner").css('display','inline-block');
 			$(".news-page-col").empty();
+
 			console.log(data);
 			if(data.length == 0){
 				$('.news-page-col').html(
@@ -41,15 +105,16 @@ $(document).ready(function() {
 					$(".news-page-col").append(news_card)
 				});
 			}
-		});
+		}).always(function(data){$(".news-spinner").hide();});
 	
 	$('.news-search-form').submit(function() {
     // Get all the forms elements and their values in one step
     $('.news-col-loader').show();
+    $(".news-spinner").css('display','inline-block');
     var values = $(this).serializeArray();
-    var news_search_keyword = values[0].value;
+    news_search_keyword = values[0].value;
     if(news_search_keyword == "") news_search_keyword='trump';
-    var news_source = $('.news-source-selected-value').text();
+    news_source = $('.news-source-selected-value').text();
     $.get("/news_analysis", data={'keyword': news_search_keyword,'news_source':news_source},
     	function(data,status){
     		news_data=data;
@@ -91,7 +156,7 @@ $(document).ready(function() {
     				$(".news-page-col").append(news_card)
     			});
     		}
-    	}).always(function(data){$('.news-col-loader').hide();});
+    	}).always(function(data){$(".news-spinner").hide();});
 
 
 
@@ -169,38 +234,38 @@ $(document).ready(function() {
 
 				var news_full_data = data['full_text'];
 				if(news_full_data.length > 0){
-				var lines = news_full_data.split(/[,\. ]+/g),
-				highcharts_data = Highcharts.reduce(lines, function (arr, word) {
-					var obj = Highcharts.find(arr, function (obj) {
-						return obj.name === word;
-					});
-					if (obj) {
-						obj.weight += 1;
-					} else {
-						obj = {
-							name: word,
-							weight: 1
-						};
-						arr.push(obj);
-					}
-					return arr;
-				}, []);
+					var lines = news_full_data.split(/[,\. ]+/g),
+					highcharts_data = Highcharts.reduce(lines, function (arr, word) {
+						var obj = Highcharts.find(arr, function (obj) {
+							return obj.name === word;
+						});
+						if (obj) {
+							obj.weight += 1;
+						} else {
+							obj = {
+								name: word,
+								weight: 1
+							};
+							arr.push(obj);
+						}
+						return arr;
+					}, []);
 
-				highcharts_data.sort(function(first, second) {
-					return second.weight - first.weight;
-				});
-				highcharts_data = highcharts_data.slice(0,66);
-				Highcharts.chart('news-overlay-wordcloud', {
-					series: [{
-						type: 'wordcloud',
-						data: highcharts_data,
-						name: 'Occurrences',
-					}],
-					title: {
-						text: 'Wordcloud of News Article'
-					}
-				});
-			}
+					highcharts_data.sort(function(first, second) {
+						return second.weight - first.weight;
+					});
+					highcharts_data = highcharts_data.slice(0,66);
+					Highcharts.chart('news-overlay-wordcloud', {
+						series: [{
+							type: 'wordcloud',
+							data: highcharts_data,
+							name: 'Occurrences',
+						}],
+						title: {
+							text: 'Wordcloud of News Article'
+						}
+					});
+				}
 
 
 

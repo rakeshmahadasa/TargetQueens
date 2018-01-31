@@ -5,6 +5,7 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -47,8 +48,11 @@
             <input name="news-search-keyword" type="text" class="form-control" placeholder="Search for Keyword">
           </div>
           <button type="submit" class="news-search-btn btn btn-default">Submit</button>
+        <i class="fa fa-circle-o-notch fa-spin news-spinner" style="color: white;font-size: 25px;"></i>
+
         </form>
       </div>
+
     </nav>
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
@@ -116,10 +120,10 @@
 
     <div class="container-fluid full-page-container">
       <div class="row full-page-row">
-        <div class="col-sm-6 news-page-col">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 news-page-col">
 
         </div>
-        <div class="col-sm-6 twitter-page-col" username="realDonaldTrump">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 twitter-page-col" username="realDonaldTrump">
           <a class="twitter-timeline" href="https://twitter.com/realDonaldTrump" ></a> 
         </div>
       </div>

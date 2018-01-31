@@ -99,13 +99,15 @@ def calc_sentiment(paragraph):
 		pos_sentiment=neg_sentiment=neu_sentiment=0
 		for sentence in sentences:
 			ss = sid.polarity_scores(sentence)
-			max_sentiment = max(ss['neg'],ss['pos'],ss['neu'])
-			if ss['pos'] == max_sentiment:
-				pos_sentiment+=1
-			elif ss['neg'] == max_sentiment:
+			comp_sent = ss['compound']
+			if comp_sent<0 and comp_sent*-1 <0.33:
+				neu_sentiment+=1
+			elif comp_sent<0 and comp_sent*-1 >=0.33:
 				neg_sentiment+=1
-			elif ss['neu'] == max_sentiment:
-				neu_sentiment+=1				
+			elif comp_sent>0 and comp_sent <0.33:
+				neu_sentiment+=1
+			elif comp_sent>0 and comp_sent >=0.33:
+				pos_sentiment+=1			
 		if neg_sentiment == max(neg_sentiment,pos_sentiment,neu_sentiment):
 			return "neg"
 		elif pos_sentiment == max(neg_sentiment,pos_sentiment,neu_sentiment):

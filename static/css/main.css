@@ -240,3 +240,7 @@ border-radius: 15px;
 	margin: auto;
 }
 
+.news-spinner{
+	display: none;
+}
+
