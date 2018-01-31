@@ -81,6 +81,7 @@ def setup_news_api(domain_list,keyword_list):
 			setup["news_root_url"] + \
 			"?q=" + keyword_list_str + \
 			"&domains="+ domain_list_str + \
+			"&sortBy=publishedAt"+\
 			"&apiKey="+setup["news_api_key"]
 	print(api_url)
 	response = urllib.request.urlopen(api_url)
