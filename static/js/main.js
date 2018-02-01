@@ -26,6 +26,9 @@ $(document).ready(function() {
 						else{
 							$.each(data, function(count, news_info) {
 								var current_title="Title for the Article Not Found";
+								var current_desc ="Description for the Article Not Found";
+								if(news_info['description']!=null)current_desc=news_info['description'];
+
 								if(news_info['title']!=null)current_title=news_info['title'];
 								var news_image_url="";
 								if(news_info['urlToImage']!=null)news_image_url=news_info['urlToImage'].replace("'","\'");
@@ -48,7 +51,7 @@ $(document).ready(function() {
 								+
 								'</strong>\
 								<p class="text-primary news-description">\
-								'+news_info['description'].replace("'","\'")+'</p></div></div></div><br>'
+								'+current_desc.replace("'","\'")+'</p></div></div></div><br>'
 
 								$(".news-page-col").append(news_card)
 							});
@@ -78,6 +81,9 @@ $(document).ready(function() {
 			else{
 				$.each(data, function(count, news_info) {
 					var current_title="Title for the Article Not Found";
+					var current_desc ="Description for the Article Not Found";
+					if(news_info['description']!=null)current_desc=news_info['description'];
+
 					if(news_info['title']!=null)current_title=news_info['title'];
 					var news_image_url="";
 					if(news_info['urlToImage']!=null)news_image_url=news_info['urlToImage'].replace("'","\'");
@@ -100,7 +106,7 @@ $(document).ready(function() {
 					+
 					'</strong>\
 					<p class="text-primary news-description">\
-					'+news_info['description'].replace("'","\'")+'</p></div></div></div><br>'
+					'+current_desc.replace("'","\'")+'</p></div></div></div><br>'
 
 					$(".news-page-col").append(news_card)
 				});
@@ -129,6 +135,9 @@ $(document).ready(function() {
     		else{
     			$.each(data, function(count, news_info) {
     				var current_title="Title for the Article Not Found";
+    				var current_desc ="Description for the Article Not Found";
+    				if(news_info['description']!=null)current_desc=news_info['description'];
+
     				if(news_info['title']!=null)current_title=news_info['title'];
     				var news_image_url="";
     				if(news_info['urlToImage']!=null)news_image_url=news_info['urlToImage'].replace("'","\'");
@@ -151,7 +160,7 @@ $(document).ready(function() {
     				+
     				'</strong>\
     				<p class="text-primary news-description">\
-    				'+news_info['description'].replace("'","\'")+'</p></div></div></div><br>'
+    				'+current_desc.replace("'","\'")+'</p></div></div></div><br>'
 
     				$(".news-page-col").append(news_card)
     			});
